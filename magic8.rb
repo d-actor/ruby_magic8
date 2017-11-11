@@ -1,3 +1,9 @@
+# - ability to reset answers back to the original bank (hint: think arr.clone)
+#  via easter egg question ("reset_answers")
+# -ability to use script arguments when the magic eight ball is started to do bonus functionality above
+#  for example ruby magic_eight.RB add_answers
+# this would start your script but instead of running the regular way you would be prompted to add answers first
+
 require 'pry'
 require 'colorize'
 
@@ -29,12 +35,12 @@ def eightball
   puts "--MAGIC RUBY 8BALL!--".cyan
   puts "\n***Type 'Quit' at any time to exit program***\n".magenta
   puts "Enter your question: ".cyan
-  question = gets.strip
-  case question
-    when question == "Quit", "Q", "quit", "q", "QUIT"
+  question = STDIN.gets.strip
+  case question.downcase
+    when "quit", "q"
       puts "Goodbye!".magenta
       exit
-    when question == "Add Answer", "Add answer", "add answer", "add Answer", "ADD ANSWER"
+    when "add answer"
       puts "*SUPER SECRET EASTER EGG ADD ANSWER MODE!*"
       puts "Well look at you bud... enter the answer you'd like to add: "
       add_ans = gets.strip
@@ -44,8 +50,16 @@ def eightball
           eightball
         end
       end
-      @answers << add_ans
+      @answers << add_ans.magenta
       puts "Added!"
+      eightball
+    when "print answers"
+      puts "--ALL ANSWERS--".yellow
+      print "-"
+      print @answers.join("\n-")
+      puts
+    when ""
+      puts "Seriously... ask me anything."
       eightball
     else
       puts "\n"
