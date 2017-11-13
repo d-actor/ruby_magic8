@@ -43,16 +43,16 @@ def eightball
     when "add answer"
       puts "*SUPER SECRET EASTER EGG ADD ANSWER MODE!*"
       puts "Well look at you bud... enter the answer you'd like to add: "
-      add_ans = gets.strip
+      add_ans = STDIN.gets.strip
       @answers.each do |value|
         if add_ans == value
           puts "That answer is already in the 8ball."
           eightball
         end
       end
-      @answers << add_ans.magenta
+      @answers.clone << add_ans.magenta
       puts "Added!"
-      eightball
+      eightball_custom
     when "print answers"
       puts "--ALL ANSWERS--".yellow
       print "-"
@@ -67,6 +67,47 @@ def eightball
       puts "\n"
   end
   eightball
+end
+
+def eightball_custom
+  puts "--MAGIC RUBY 8BALL!--".cyan
+  puts "\n***Type 'Quit' at any time to exit program***\n".magenta
+  puts "Enter your question: ".cyan
+  question = STDIN.gets.strip
+  case question.downcase
+    when "quit", "q"
+      puts "Goodbye!".magenta
+      exit
+    when "add answer"
+      puts "*SUPER SECRET EASTER EGG ADD ANSWER MODE!*"
+      puts "Well look at you bud... enter the answer you'd like to add: "
+      add_ans = STDIN.gets.strip
+      @answers.clone.each do |value|
+        if add_ans == value
+          puts "That answer is already in the 8ball."
+          eightball_custom
+        end
+      end
+      @answers.clone << add_ans.magenta
+      puts "Added!"
+      eightball_custom
+    when "print answers"
+      puts "--ALL ANSWERS--".yellow
+      print "-"
+      print @answers.clone.join("\n-")
+      puts
+    when ""
+      puts "Seriously... ask me anything."
+      eightball_custom
+    when "reset answers"
+      puts "Whatever you say bud."
+      eightball
+    else
+      puts "\n"
+      puts @answers.clone.sample
+      puts "\n"
+  end
+  eightball_custom
 end
 
 eightball
